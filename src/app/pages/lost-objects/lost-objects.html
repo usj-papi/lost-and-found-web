@@ -1,0 +1,11 @@
+<ul>
+  @if (lostObjects() === null) {
+    Loading...
+  } @else if (lostObjects()?.length === 0) {
+    <li>No lost objects found.</li>
+  } @else {
+    @for (lostObject of lostObjects(); track lostObject.id) {
+      <li>{{ lostObject.name }}</li>
+    }
+  }
+</ul>
