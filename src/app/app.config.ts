@@ -3,6 +3,8 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 import { LostObjectRepository } from '../contexts/lost-object/domain/lost-object.contract.repository';
 import { LostObjectHttpRepository } from '../contexts/lost-object/infrastructure/lost-object.http.repository';
+import { UserRepository } from '../contexts/users/domain/user.contract.repository';
+import { UserHttpRepository } from '../contexts/users/infrastructure/user.http.repository';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -11,5 +13,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     { provide: LostObjectRepository, useClass: LostObjectHttpRepository },
+    { provide: UserRepository, useClass: UserHttpRepository },
   ],
 };

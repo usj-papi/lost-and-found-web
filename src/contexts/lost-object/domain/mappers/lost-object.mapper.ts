@@ -1,9 +1,10 @@
+import { Mapper } from '../../../shared/domain/mappers/mapper.contract';
 import { LostObjectDTO } from '../dtos/lost-object.dto';
 import { LostObject } from '../entities/lost-object.entity';
 import { LostObjectStatusMapper } from './lost-object-status.mapper';
 
-export class LostObjectMapper {
-  static toDTO(entity: LostObject): LostObjectDTO {
+export class LostObjectMapper implements Mapper<LostObject, LostObjectDTO> {
+  toDTO(entity: LostObject): LostObjectDTO {
     return {
       id: entity.id,
       name: entity.name,
@@ -13,7 +14,7 @@ export class LostObjectMapper {
     };
   }
 
-  static toEntity(dto: LostObjectDTO): LostObject {
+  toEntity(dto: LostObjectDTO): LostObject {
     return {
       id: dto.id,
       name: dto.name,

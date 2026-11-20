@@ -8,10 +8,11 @@ import { LostObjectMapper } from '../domain/mappers/lost-object.mapper';
 })
 export class LostObjectService {
   private readonly lostObjectsRepository = inject(LostObjectRepository);
+  private readonly lostObjectMapper = new LostObjectMapper();
 
   findAllLostObjects(): Promise<LostObject[]> {
     return this.lostObjectsRepository
       .findAll()
-      .then((lostObjectsDTO) => lostObjectsDTO.map((dto) => LostObjectMapper.toEntity(dto)));
+      .then((lostObjectsDTO) => lostObjectsDTO.map((dto) => this.lostObjectMapper.toEntity(dto)));
   }
 }

@@ -1,0 +1,8 @@
+<form>
+  <h1>Login</h1>
+
+  <input type="text" [formField]="loginForm.username" placeholder="Username">
+  <input type="password" [formField]="loginForm.password" placeholder="Password">
+
+  <button type="submit" (click)="handleLogin($event)" [disabled]="loginForm().invalid() || isLoggingIn()">Login</button>
+</form>
