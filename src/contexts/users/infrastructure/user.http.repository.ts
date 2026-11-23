@@ -24,4 +24,14 @@ export class UserHttpRepository extends UserRepository {
       this.httpClient.post<TokensDTO>(`${this.apiUrl}/auth/login`, credentials),
     );
   }
+
+  override getAllUsers(): Promise<PublicUserDTO[]> {
+    return firstValueFrom(this.httpClient.get<PublicUserDTO[]>(`${this.apiUrl}/users`));
+  }
+
+  override refresh(refreshToken: string): Promise<TokensDTO> {
+    return firstValueFrom(
+      this.httpClient.post<TokensDTO>(`${this.apiUrl}/auth/refresh`, { refreshToken }),
+    );
+  }
 }

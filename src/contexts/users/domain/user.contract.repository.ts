@@ -9,4 +9,6 @@ import { TokensDTO } from './dtos/tokens.dto';
 export abstract class UserRepository {
   abstract create(user: CreateUserDTO): Promise<PublicUserDTO>;
   abstract loginUser(credentials: { username: string; password: string }): Promise<TokensDTO>;
+  abstract getAllUsers(): Promise<PublicUserDTO[]>;
+  abstract refresh(refreshToken: string): Promise<TokensDTO>;
 }

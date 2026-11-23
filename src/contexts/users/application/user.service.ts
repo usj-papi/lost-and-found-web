@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { CreateUser } from '../domain/entities/create-user.entity';
 import { Credentials } from '../domain/entities/credentials.entity';
+import { Tokens } from '../domain/entities/tokens.entity';
 import { User } from '../domain/entities/user.entity';
 import { CreateUserMapper } from '../domain/mappers/create-user.mapper';
 import { CredentialsMapper } from '../domain/mappers/credentials.mapper';
@@ -23,14 +24,22 @@ export class UserService {
       .then((publicUserDTO) => this.publicUserMapper.toEntity(publicUserDTO));
   }
 
-  loginUser(credentials: Credentials): Promise<User> {
+  loginUser(credentials: Credentials): Promise<Tokens> {
     const credentialsDTO = new CredentialsMapper().toDTO(credentials);
     return this.userRepository.loginUser(credentialsDTO).then((tokensDTO) => {
-      const tokens = new TokensMapper().toEntity(tokensDTO);
+      return new TokensMapper().toEntity(tokensDTO);
+    });
+  }
 
-      // SAVE TOKENS IN AuthService (pending)
+  getAllUsers(): Promise<User[]> {
+    return this.userRepository.getAllUsers().then((publicUserDTOs) => {
+      return publicUserDTOs.map((publicUserDTO) => this.publicUserMapper.toEntity(publicUserDTO));
+    });
+  }
 
-      return {} as User; // Return a User entity (pending)
+  refresh(refreshToken: string): Promise<Tokens> {
+    return this.userRepository.refresh(refreshToken).then((tokensDTO) => {
+      return new TokensMapper().toEntity(tokensDTO);
     });
   }
 }

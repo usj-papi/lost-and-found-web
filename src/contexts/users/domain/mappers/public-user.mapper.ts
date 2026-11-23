@@ -4,6 +4,10 @@ import { User } from '../entities/user.entity';
 
 export class PublicUserMapper implements Mapper<User, PublicUserDTO> {
   toDTO(entity: User): PublicUserDTO {
+    if (!entity.createdAt || !entity.name || !entity.email) {
+      throw new Error('Missing required fields in User entity');
+    }
+
     return {
       id: entity.id,
       username: entity.username,
